@@ -15,6 +15,35 @@ app.use((req, res, next) => {
     next();
 });
 
+// Route pour mettre à jour les détails d'un employé par son ID
+app.put('/api/employes/:id', async (req, res) => {
+    const employeId = req.params.id;
+    const updatedEmploye = req.body;
+    try {
+        await dbConnect.updateEmploye(employeId, updatedEmploye);
+        res.status(204).end(); // Réponse 204 No Content si la mise à jour réussit
+    } catch (error) {
+        console.error('Erreur lors de la mise à jour des détails de l\'employé :', error);
+        res.status(500).json({ message: 'Erreur lors de la mise à jour des détails de l\'employé' });
+    }
+});
+
+// Route pour ajouter un nouvel employé
+app.post('/api/employes', async (req, res) => {
+    const { nom, salaire } = req.body;
+    try {
+        // Code pour insérer le nouvel employé dans la base de données
+        // Assurez-vous de valider les données si nécessaire
+        const newEmployee = { nom, salaire };
+        const result = await dbConnect.addEmployee(newEmployee);
+        // Envoyer une réponse avec les données de l'employé ajouté
+        res.status(201).json(result);
+    } catch (error) {
+        console.error('Erreur lors de l\'ajout de l\'employé :', error);
+        res.status(500).json({ message: 'Erreur lors de l\'ajout de l\'employé' });
+    }
+});
+
 // Route pour récupérer tous les employés
 app.get('/api/employes', async (req, res) => {
     try {

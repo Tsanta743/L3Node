@@ -134,8 +134,7 @@ function EmployesList() {
     
 
     const add = () => {
-        // Ajoutez le code pour ajouter un nouvel employé
-        // Utilisez la méthode history.push() ou une autre méthode appropriée pour la navigation
+        window.location.href = '/add-page'
     };
 
     return (

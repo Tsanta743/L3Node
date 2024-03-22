@@ -20,6 +20,30 @@ const getEmployes = () => {
     });
 };
 
+const updateEmploye = (employeId, updatedEmploye) => {
+    return new Promise((resolve, reject) => {
+        pool.query('UPDATE employe SET ? WHERE numEmp = ?', [updatedEmploye, employeId], (error, results) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(results);
+            }
+        });
+    });
+};
+
+const addEmployee = (newEmployee) => {
+    return new Promise((resolve, reject) => {
+        pool.query('INSERT INTO employe SET ?', newEmployee, (error, results) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(results);
+            }
+        });
+    });
+};
+
 const deleteEmploye = (employeId) => {
     return new Promise((resolve, reject) => {
         pool.query('DELETE FROM employe WHERE numEmp = ?', [employeId], (error, results) => {
@@ -45,4 +69,4 @@ const getEmployeById = (employeId) => {
     });
 };
 
-module.exports = { getEmployes, deleteEmploye , getEmployeById };
+module.exports = { getEmployes, deleteEmploye , getEmployeById , updateEmploye , addEmployee};
